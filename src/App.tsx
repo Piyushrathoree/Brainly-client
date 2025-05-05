@@ -1,15 +1,14 @@
-import { AppSidebar } from "./components/MainSection";
-
+import "./App.css";
+import MainSection from "./components/MainSection";
+import Navbar2 from "./components/Navbar";
 function App() {
-  // Menu items.
-
   return (
     <>
-      <div className="min-h-screen w-screen  flex items-center justify-center gap-10 ">
-        <AppSidebar />
+      <div className="min-h-screen w-screen flex flex-col items-start justify-center gap-10 relative">
+        <Navbar2 />
+        <MainSection />
       </div>
     </>
   );
 }
-
 export default App;
