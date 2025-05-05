@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 interface CardProps {
   title?: string;
   logo?: React.ReactNode;
-  date?: string;
+  date?: string | number;
   description?: string;
 }
 
@@ -29,6 +29,8 @@ const Card = ({ ...props }: CardProps) => {
     </svg>
   ); // need to change this too with the content type logo
 
+
+
   const handleShare = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     // they should be completed
@@ -38,7 +40,7 @@ const Card = ({ ...props }: CardProps) => {
     // they should be completed
   };
   return (
-    <div className="w-[300px] h-[350px] bg-white/90 dark:bg-[#0F0F0F]  rounded-lg shadow-sm dark:shadow-white p-4 flex flex-col gap-4 justify-between ">
+    <div className="w-[300px] h-[350px] bg-white/90 dark:bg-[#0a0a0a]  rounded-lg drop-shadow-lg dark:shadow-sm dark:shadow-white p-4 border border-slate-100 flex flex-col gap-4 justify-between hover:scale-105 duration-300 ">
       <div className="flex flex-col gap-4">
         <div className="flex  justify-between items-center">
           <div className="flex gap-2 items-center">
@@ -92,7 +94,7 @@ const Card = ({ ...props }: CardProps) => {
         </div>
         <div className="space-y-1">
           <ul className="list-disc list-inside space-y-1 text-slate-800 dark:text-slate-300 text-sm">
-            {props.description}
+            {props.description} 
           </ul>
         </div>
       </div>
@@ -105,7 +107,7 @@ const Card = ({ ...props }: CardProps) => {
             #first tag
           </div>
         </div>
-        <div className="flex justify-start items-center mt-3 text-[12px] text-slate-800 dark:text-slate-400">
+        <div className="flex justify-start items-center mt-3 text-[12px] text-slate-800 dark:text-slate-400 ml-3">
           created on {props.date}
         </div>
       </div>
