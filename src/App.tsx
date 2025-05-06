@@ -4,7 +4,7 @@ import Navbar2 from "./components/Navbar";
 function App() {
   return (
     <>
-      <div className="min-h-screen w-screen flex flex-col items-start justify-center gap-10 relative">
+      <div className="h-screen w-screen flex flex-col items-start bg-white dark:bg-black/97 justify-start overflow-hidden">
         <Navbar2 />
         <MainSection />
       </div>

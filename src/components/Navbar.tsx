@@ -14,7 +14,7 @@ function Navbar2() {
   };
   return (
     <>
-      <Navbar className="bg-transparent pt-5 sm:py-5 fixed top-0 left-0 w-full shadow-md">
+      <Navbar className="bg-transparent pt-5 sm:py-5 fixed top-0 left-0 w-full shadow-md ">
         <div className=" flex items-center justify-between">
           <div className="pl-5 sm:pl-8 font-bold text-xl flex gap-2 items-center text-blue-500">
             <svg

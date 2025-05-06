@@ -49,15 +49,15 @@ import Card from "./Card";
 
  
   return (
-    <div className={`w-screeen overflow-x-hidden min-h-screen flex absolute top-20`}>
+    <div className="w-screen overflow-hidden h-[calc(100vh-64px)] flex mt-20">
       <div>
         <SidebarProvider className="bg-transparent ">
-          <Sidebar className="dark:text-white w-92 fixed top-24  " variant="sidebar">
+          <Sidebar className="dark:text-white w-92 fixed top-24  " variant="sidebar" >
             <SidebarContent>
-              <SidebarGroup>
+              <SidebarGroup >
                 
-                <SidebarGroupContent>
-                  <SidebarMenu>
+                <SidebarGroupContent >
+                  <SidebarMenu >
                     {items.map((item) => (
                       <SidebarMenuItem key={item.title}>
                         <SidebarMenuButton asChild className="pl-5">
@@ -79,15 +79,15 @@ import Card from "./Card";
           </Sidebar>
         </SidebarProvider>
       </div>
-      <div className="text-black/90 dark:text-white   w-[82vw] ml-24 flex flex-col gap-5">
-        <nav className="flex items-center justify-between px-10  py-3  relative ">
+      <div className="text-black/90 dark:text-white w-[82vw] ml-24 flex flex-col">
+        <nav className="flex items-center justify-between ml-5 px-10 z-40 py-3 w-[80vw]">
           <div className="font-semibold text-xl text-white">All Content </div>
-          <div className="flex gap-4  ">
+          <div className="flex gap-4">
             <Button3 />
             <Button2 />
           </div>
         </nav>
-        <div className=" flex flex-wrap gap-10  absolute top-24 ml-[104px] ">
+        <div className="flex flex-wrap gap-10 mt-5 pt-5  ml-[104px] pl-5 h-[calc(100vh-120px)] overflow-y-auto pr-10 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-gray-400">
           <Card
             title="hey there "
             description="1.this card is for testing purpose ...........
