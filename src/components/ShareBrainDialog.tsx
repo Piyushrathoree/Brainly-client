@@ -35,16 +35,16 @@ const ShareBrainDialog: React.FC<ShareBrainDialogProps> = ({ isOpen, onClose, sh
         <div className="grid gap-4 py-4">
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-300">Share Link</label>
-            <div className="flex gap-2">
+            <div className="flex gap-2 items-center justify-between">
               <Input
                 value={shareUrl}
                 readOnly
-                className="bg-black/50 border-gray-700 text-white"
+                className="bg-black/20 outline-none  text-white w-[20rem] p-1.5 rounded-md"
               />
               <Button
                 onClick={handleCopy}
                 variant="outline"
-                className="shrink-0 border-gray-700 hover:bg-purple-900/40 hover:text-purple-300"
+                className="shrink-0 border-gray-700  bg-purple-900/20 text-purple-300 hover:text-purple-300"
               >
                 {copied ? (
                   <IconCheck className="w-5 h-5 text-green-500" />
@@ -58,7 +58,7 @@ const ShareBrainDialog: React.FC<ShareBrainDialogProps> = ({ isOpen, onClose, sh
             <Button 
               variant="outline" 
               onClick={onClose}
-              className="border-gray-700 hover:bg-purple-900/40 hover:text-purple-300"
+              className="border-gray-700 bg-purple-900/20 hover:text-purple-300 text-purple-300"
             >
               Close
             </Button>

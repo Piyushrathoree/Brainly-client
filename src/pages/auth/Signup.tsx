@@ -18,7 +18,7 @@ export function Signup() {
     email: "",
     password: "",
   });
-  const { registerUser, isLoading } = useAuth();
+  const { registerUser, loginWithGoogle, loginWithGithub, isLoading } = useAuth();
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -37,13 +37,13 @@ export function Signup() {
     <div className="shadow-input mx-auto w-full max-w-md rounded-none text-slate-300 bg-black p-4 md:rounded-2xl md:p-8 border border-slate-800 dark">
       <h2 className="text-xl font-bold text-slate-200">Welcome to Brainly</h2>
       <p className="mt-2 max-w-sm text-sm text-slate-300">
-        Login to Brainly if you can because we don&apos;t have a login flow yet
+        Create your account or sign up with a social provider
       </p>
 
       <form className="my-8" onSubmit={handleSubmit}>
         <div className="mb-4 flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
           <LabelInputContainer>
-            <Label htmlFor="name">First name</Label>
+            <Label htmlFor="name">Full name</Label>
             <Input
               id="name"
               placeholder="John Doe"
@@ -93,20 +93,22 @@ export function Signup() {
           <button
             className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626]"
             type="button"
+            onClick={loginWithGithub}
           >
             <IconBrandGithub className="h-4 w-4 text-slate-800 dark:text-slate-300" />
             <span className="text-sm text-slate-700 dark:text-slate-300">
-              GitHub
+              Sign up with GitHub
             </span>
             <BottomGradient />
           </button>
           <button
             className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626]"
             type="button"
+            onClick={loginWithGoogle}
           >
             <IconBrandGoogle className="h-4 w-4 text-slate-800 dark:text-slate-300" />
             <span className="text-sm text-slate-700 dark:text-slate-300">
-              Google
+              Sign up with Google
             </span>
             <BottomGradient />
           </button>

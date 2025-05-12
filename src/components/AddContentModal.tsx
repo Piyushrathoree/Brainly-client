@@ -1,10 +1,21 @@
-import React from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import React from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { IconFileText, IconBrandTwitter, IconVideo, IconLink } from '@tabler/icons-react';
+import {
+  IconFileText,
+  IconBrandTwitter,
+  IconVideo,
+  IconLink,
+} from "@tabler/icons-react";
 
-type ContentType = 'note' | 'tweet' | 'video' | 'link';
+type ContentType = "note" | "tweet" | "video" | "link";
 
 interface ContentData {
   type: ContentType;
@@ -20,12 +31,18 @@ interface AddContentModalProps {
   onSubmit: (data: ContentData) => void;
 }
 
-const AddContentModal: React.FC<AddContentModalProps> = ({ isOpen, onClose, onSubmit }) => {
-  const [contentType, setContentType] = React.useState<'note' | 'tweet' | 'video' | 'link'>('note');
-  const [title, setTitle] = React.useState('');
-  const [url, setUrl] = React.useState('');
-  const [tags, setTags] = React.useState('');
-  const [content, setContent] = React.useState('');
+const AddContentModal: React.FC<AddContentModalProps> = ({
+  isOpen,
+  onClose,
+  onSubmit,
+}) => {
+  const [contentType, setContentType] = React.useState<
+    "note" | "tweet" | "video" | "link"
+  >("note");
+  const [title, setTitle] = React.useState("");
+  const [url, setUrl] = React.useState("");
+  const [tags, setTags] = React.useState("");
+  const [content, setContent] = React.useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,8 +50,8 @@ const AddContentModal: React.FC<AddContentModalProps> = ({ isOpen, onClose, onSu
       type: contentType,
       title,
       url,
-      tags: tags.split(',').map(tag => tag.trim()),
-      content
+      tags: tags.split(",").map((tag) => tag.trim()),
+      content,
     });
     onClose();
   };
@@ -51,33 +68,33 @@ const AddContentModal: React.FC<AddContentModalProps> = ({ isOpen, onClose, onSu
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 gap-2">
             <Button
-              variant={contentType === 'note' ? 'default' : 'outline'}
-              className="flex flex-col items-center gap-2 h-auto py-3 border-gray-700 hover:bg-purple-900/40 hover:text-purple-300"
-              onClick={() => setContentType('note')}
+              variant={contentType === "note" ? "default" : "outline"}
+              className="flex flex-col items-center gap-2 h-auto py-3 border-gray-700 bg-purple-900/20 text-purple-300 hover:text-purple-3000"
+              onClick={() => setContentType("note")}
             >
               <IconFileText className="w-5 h-5" />
               <span className="text-xs">Note</span>
             </Button>
             <Button
-              variant={contentType === 'tweet' ? 'default' : 'outline'}
-              className="flex flex-col items-center gap-2 h-auto py-3 border-gray-700 hover:bg-purple-900/40 hover:text-purple-300"
-              onClick={() => setContentType('tweet')}
+              variant={contentType === "tweet" ? "default" : "outline"}
+              className="flex flex-col items-center gap-2 h-auto py-3 border-gray-700 bg-purple-900/20 text-purple-300 hover:text-purple-3000"
+              onClick={() => setContentType("tweet")}
             >
               <IconBrandTwitter className="w-5 h-5" />
               <span className="text-xs">Tweet</span>
             </Button>
             <Button
-              variant={contentType === 'video' ? 'default' : 'outline'}
-              className="flex flex-col items-center gap-2 h-auto py-3 border-gray-700 hover:bg-purple-900/40 hover:text-purple-300"
-              onClick={() => setContentType('video')}
+              variant={contentType === "video" ? "default" : "outline"}
+              className="flex flex-col items-center gap-2 h-auto py-3 border-gray-700 bg-purple-900/20 text-purple-300 hover:text-purple-3000"
+              onClick={() => setContentType("video")}
             >
               <IconVideo className="w-5 h-5" />
               <span className="text-xs">Video</span>
             </Button>
             <Button
-              variant={contentType === 'link' ? 'default' : 'outline'}
-              className="flex flex-col items-center gap-2 h-auto py-3 border-gray-700 hover:bg-purple-900/40 hover:text-purple-300"
-              onClick={() => setContentType('link')}
+              variant={contentType === "link" ? "default" : "outline"}
+              className="flex flex-col items-center gap-2 h-auto py-3 border-gray-700 bg-purple-900/20 text-purple-300 hover:text-purple-3000"
+              onClick={() => setContentType("link")}
             >
               <IconLink className="w-5 h-5" />
               <span className="text-xs">Link</span>
@@ -96,10 +113,14 @@ const AddContentModal: React.FC<AddContentModalProps> = ({ isOpen, onClose, onSu
               />
             </div>
 
-            {contentType !== 'note' && (
+            {contentType !== "note" && (
               <div className="space-y-2">
                 <label className="text-sm font-medium text-gray-300">
-                  {contentType === 'tweet' ? 'Tweet URL' : contentType === 'video' ? 'Video URL' : 'Link URL'}
+                  {contentType === "tweet"
+                    ? "Tweet URL"
+                    : contentType === "video"
+                    ? "Video URL"
+                    : "Link URL"}
                 </label>
                 <Input
                   value={url}
@@ -111,21 +132,25 @@ const AddContentModal: React.FC<AddContentModalProps> = ({ isOpen, onClose, onSu
               </div>
             )}
 
-            {contentType === 'note' && (
+            {contentType === "note" && (
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-300">Content</label>
+                <label className="text-sm font-medium text-gray-300">
+                  Content
+                </label>
                 <textarea
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   placeholder="Enter your note content"
-                  className="w-full min-h-[100px] rounded-md border border-gray-700 bg-black/50 text-white p-2 placeholder:text-gray-500"
+                  className="w-full min-h-[100px] rounded-md border border-gray-700 bg-black/50 text-white p-2 placeholder:text-gray-500 outline-none"
                   required
                 />
               </div>
             )}
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-300">Tags (comma separated)</label>
+              <label className="text-sm font-medium text-gray-300">
+                Tags (comma separated)
+              </label>
               <Input
                 value={tags}
                 onChange={(e) => setTags(e.target.value)}
@@ -135,16 +160,16 @@ const AddContentModal: React.FC<AddContentModalProps> = ({ isOpen, onClose, onSu
             </div>
 
             <div className="flex justify-end gap-2">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 onClick={onClose}
-                className="border-gray-700 hover:bg-purple-900/40 hover:text-purple-300"
+                className="border-gray-700 bg-purple-900/20 hover:text-purple-300  text-purple-300 "
               >
                 Cancel
               </Button>
-              <Button 
+              <Button
                 type="submit"
-                className="bg-purple-600 hover:bg-purple-700"
+                className="bg-purple-600 hover:bg-purple-700 text-white "
               >
                 Add Content
               </Button>
@@ -156,4 +181,4 @@ const AddContentModal: React.FC<AddContentModalProps> = ({ isOpen, onClose, onSu
   );
 };
 
-export default AddContentModal; 
+export default AddContentModal;

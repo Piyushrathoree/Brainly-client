@@ -215,9 +215,9 @@ const MainSection: React.FC = () => {
           {sidebarLinks.map((item) => (
             <button
               key={item.key}
-              className={`flex items-center gap-3 text-muted-foreground hover:text-foreground py-2 px-3 rounded-lg transition-colors hover:bg-accent ${
+              className={`flex items-center gap-3 text-muted-foreground  py-2 px-3 rounded-lg transition-colors  ${
                 selectedSection === item.key
-                  ? "bg-purple-900/40 text-purple-300 dark:bg-purple-900/40 dark:text-purple-300"
+                  ? "bg-purple-900/40 text-purple-300 "
                   : ""
               }`}
               onClick={() => setSelectedSection(item.key as SectionType)}

@@ -1,15 +1,29 @@
-import { IconBrain } from "@tabler/icons-react";
+import { IconBrain, IconLogout } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { User } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { useEffect, useState } from "react";
 
 interface NavbarProps {
   isAuthenticated?: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = () => {
+const Navbar: React.FC<NavbarProps> = ({ isAuthenticated: propIsAuthenticated }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { logout } = useAuth();
+  const [isAuthenticated, setIsAuthenticated] = useState(propIsAuthenticated);
+
+  // Check for authentication token in localStorage
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsAuthenticated(!!token || propIsAuthenticated);
+  }, [propIsAuthenticated, location.pathname]);
+
+  const handleLogout = async () => {
+    await logout();
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-lg border-b border-gray-800">
@@ -28,7 +42,7 @@ const Navbar: React.FC<NavbarProps> = () => {
           </motion.button>
 
           <div className="flex items-center space-x-4">
-            {location.pathname === "/dashboard" && (
+            {isAuthenticated && (
               <>
                 <div className="relative">
                   <input
@@ -37,16 +51,26 @@ const Navbar: React.FC<NavbarProps> = () => {
                     className="w-64 px-4 py-2 pl-3 border border-gray-700 rounded-lg focus:outline-none focus:ring focus:ring-purple-500 focus:border-transparent"
                   />
                 </div>
-                <button className="p-2 hover:bg-gray-800 rounded-lg transition-colors">
-                  <User />
+                <button 
+                  className="p-2 hover:bg-gray-800 rounded-lg transition-colors"
+                  onClick={() => navigate("/profile")}
+                >
+                  <User className="text-white" />
+                </button>
+                <button 
+                  className="p-2 hover:bg-gray-800 rounded-lg transition-colors flex items-center space-x-2"
+                  onClick={handleLogout}
+                >
+                  <IconLogout className="w-5 h-5 text-white" />
+                  <span className="text-white max-md:hidden">Logout</span>
                 </button>
               </>
             )}
-            {location.pathname !== "/dashboard" && (
+            {!isAuthenticated && (
               <>
                 <button
                   className="px-4 py-2 rounded-lg text-white bg-gradient-to-br from-purple-500 to-blue-500 font-normal hover:scale-110 duration-300"
-                  onClick={() => navigate("/dashboard")}
+                  onClick={() => navigate("/signup")}
                 >
                   Signup
                 </button>

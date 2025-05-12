@@ -5,6 +5,7 @@ import { IconBrain } from '@tabler/icons-react';
 import Navbar from './components/Navbar';
 import DeferredLoad from './components/DeferredLoad';
 
+
 // This would typically come from your auth context/state management
 const useAuth = () => {
   // Replace this with your actual auth logic

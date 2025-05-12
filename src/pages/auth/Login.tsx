@@ -16,7 +16,7 @@ export function Login() {
     email: "",
     password: "",
   });
-  const { LoginUser, isLoading } = useAuth();
+  const { LoginUser, loginWithGoogle, loginWithGithub, isLoading } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -69,7 +69,7 @@ export function Login() {
           type="submit"
           disabled={isLoading}
         >
-          {isLoading ? "Signing up..." : "Sign up"} &rarr;
+          {isLoading ? "Signing in..." : "Sign in"} &rarr;
           <BottomGradient />
         </button>
 
@@ -79,20 +79,22 @@ export function Login() {
           <button
             className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626]"
             type="button"
+            onClick={loginWithGithub}
           >
             <IconBrandGithub className="h-4 w-4 text-slate-800 dark:text-slate-300" />
             <span className="text-sm text-slate-700 dark:text-slate-300">
-              GitHub
+              Sign in with GitHub
             </span>
             <BottomGradient />
           </button>
           <button
             className="group/btn shadow-input relative flex h-10 w-full items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_#262626]"
             type="button"
+            onClick={loginWithGoogle}
           >
             <IconBrandGoogle className="h-4 w-4 text-slate-800 dark:text-slate-300" />
             <span className="text-sm text-slate-700 dark:text-slate-300">
-              Google
+              Sign in with Google
             </span>
             <BottomGradient />
           </button>
