@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap&font-display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -42,9 +42,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
 
 @layer base {
   :root {

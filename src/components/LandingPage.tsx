@@ -10,46 +10,26 @@ const LandingPage: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/95 to-black/94" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-500/5 via-transparent to-transparent" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="flex justify-center mb-8"
-          >
+          <div className="flex justify-center mb-8">
             <div className="p-4 bg-purple-500/10 rounded-2xl">
-              <IconBrain className="w-12 h-12 text-purple-500" />
+              <IconBrain className="w-12 h-12" />
             </div>
-          </motion.div>
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-5xl md:text-7xl font-bold mb-6"
-          >
+          </div>
+          <h1 className="text-5xl md:text-7xl font-bold mb-6">
             Your Second
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400"> Brain</span>
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto"
-          >
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400"> Brain</span>
+          </h1>
+          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
             Store, organize, and access your knowledge from anywhere. Save documents, videos, tweets, and more in one place.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex justify-center gap-4"
-          >
-            <button className="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg hover:from-purple-700 hover:to-pink-700 transition-all duration-200 transform hover:scale-105">
+          </p>
+          <div className="flex justify-center gap-4">
+            <button className="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg transition-all duration-300 transform hover:scale-105">
               Start Building Your Knowledge Base
             </button>
-            <button className="px-8 py-3 border border-gray-700 rounded-lg hover:bg-black/50 transition-all duration-200 transform hover:scale-105">
+            <button className="px-8 py-3 border border-gray-700 rounded-lg hover:bg-black/50 transition-all duration-300 transform hover:scale-105">
               See How It Works
             </button>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -145,7 +125,7 @@ const LandingPage: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="relative overflow-hidden bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl p-12"
+            className="relative overflow-hidden bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl p-12"
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent" />
             <div className="relative">
