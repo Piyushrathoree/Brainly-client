@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 interface SignupFormData {
   name: string;
@@ -18,8 +18,8 @@ export function Signup() {
     email: "",
     password: "",
   });
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+  const { registerUser, isLoading } = useAuth();
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData((prev) => ({
@@ -30,30 +30,7 @@ export function Signup() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      const response = await fetch("http://localhost:5000/api/v1/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        // Handle successful signup
-        const data = await response.json();
-        localStorage.setItem("token", data.token);
-        navigate("/dashboard");
-      } else {
-        // Handle error
-        const error = await response.json();
-        console.error("Signup failed:", error);
-      }
-    } catch (error) {
-      console.error("Signup error:", error);
-    } finally {
-      setIsLoading(false);
-    }
+    await registerUser(formData);
   };
 
   return (

@@ -52,7 +52,7 @@ const Navbar: React.FC<NavbarProps> = () => {
                 </button>
                 <button
                   className="px-4 py-2 rounded-lg text-white bg-gradient-to-br from-purple-500 to-blue-500 font-normal hover:scale-110 duration-300"
-                  onClick={() => navigate("/dashboard")}
+                  onClick={() => navigate("/login")}
                 >
                   Login
                 </button>
