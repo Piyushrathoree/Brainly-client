@@ -1,3 +1,8 @@
+<style>
+  * {
+    font-family: "SF Mono", "JetBrains Mono", monospace !important;
+  }
+</style>
 # Brainly LCP Optimization Guide
 
 This document outlines the optimizations implemented to improve the Largest Contentful Paint (LCP) performance of the Brainly application.
