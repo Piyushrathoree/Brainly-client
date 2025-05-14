@@ -29,7 +29,6 @@ export function OAuthCallback() {
           
           if (response.data && response.data.token) {
             localStorage.setItem('token', response.data.token);
-            
             navigate('/dashboard');
           } else {
             setError('Authentication failed. Please try again.');
