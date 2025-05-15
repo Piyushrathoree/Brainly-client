@@ -1,42 +1,41 @@
-import { ReactNode, useEffect, useState } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import { toast } from 'react-hot-toast';
+import { ReactNode, useEffect } from "react";
+
+import { toast } from "react-hot-toast";
+
 
 interface ProtectedRouteProps {
   children: ReactNode;
 }
 
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-  const location = useLocation();
-
-  useEffect(() => {
-    // Check if the user is authenticated
-    const token = localStorage.getItem('token');
-    
+  const validateToken = async () => {
+    const token = localStorage.getItem("token");
     if (!token) {
-      setIsAuthenticated(false);
-      toast.error('Please login to access this page');
-    } else {
-      // You could add token validation logic here if needed
-      setIsAuthenticated(true);
+      // token not found, redirect to login
+      window.location.href = "/login";
+      return;
     }
+    await fetch(`http://localhost:5000/api/v1/protected`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => {
+      if (!res.ok) {
+        // token is invalid, redirect to login
+        localStorage.removeItem("token");
+
+        window.location.href = "/login";
+        toast.error(
+          "you are not authorized to access this page , please login"
+        );
+      }
+    });
+    return ;
+  };
+  useEffect(() => {
+    validateToken();
   }, []);
-
-  // Show nothing while we're checking authentication
-  if (isAuthenticated === null) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="w-12 h-12 border-4 border-purple-500 rounded-full border-t-transparent animate-spin"></div>
-      </div>
-    );
-  }
-
-  // If not authenticated, redirect to login
-  if (!isAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  }
 
   // If authenticated, render the children
   return <>{children}</>;
-}; 
+};
