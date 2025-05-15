@@ -36,7 +36,7 @@ export function Signup() {
   };
 
   return (
-    <div className="shadow-input mx-auto w-full max-w-md rounded-none text-slate-300 bg-black my-[5.9vh] md:rounded-2xl md:p-8 border border-slate-800 dark">
+    <div className="shadow-input mx-auto w-full max-w-md  text-slate-300 bg-black my-[5.9vh] rounded-xl md:rounded-2xl p-6 md:p-8 border border-slate-800 dark">
       <h2 className="text-xl font-bold text-slate-200">Welcome to Brainly</h2>
       <p className="mt-2 max-w-sm text-sm text-slate-300">
         Create your account or sign up with a social provider
@@ -58,6 +58,7 @@ export function Signup() {
               value={formData.name}
               onChange={handleChange}
               required
+              className="text-slate-300"
             />
           </LabelInputContainer>
         </div>

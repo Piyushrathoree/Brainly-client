@@ -34,7 +34,7 @@ export function Login() {
   };
 
   return (
-    <div className="shadow-input mx-auto w-full max-w-md rounded-none text-slate-300 bg-black p-4 md:rounded-2xl md:p-8 border border-slate-800 dark my-[8vh]">
+    <div className="shadow-input mx-auto w-full max-w-md  text-slate-300 bg-black p-6 md:rounded-2xl rounded-xl md:p-8  border border-slate-800 dark my-[8vh]">
       <h2 className="text-xl font-bold text-slate-200">Welcome to Brainly</h2>
       <p className="mt-2 max-w-sm text-sm text-slate-300">
         Login to Brainly if you can because we don&apos;t have a login flow yet
