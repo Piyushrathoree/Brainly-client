@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { IconBrain, IconFileText, IconVideo, IconBrandTwitter, IconLink, IconSearch } from '@tabler/icons-react';
+import DeferredLoad from './DeferredLoad';
 
 const LandingPage: React.FC = () => {
   return (
@@ -17,10 +18,14 @@ const LandingPage: React.FC = () => {
           </div>
           <h1 className="text-5xl md:text-7xl font-bold mb-6">
             Your Second
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400"> Brain</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">
+              {" "}
+              Brain
+            </span>
           </h1>
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Store, organize, and access your knowledge from anywhere. Save documents, videos, tweets, and more in one place.
+            Store, organize, and access your knowledge from anywhere. Save
+            documents, videos, tweets, and more in one place.
           </p>
           <div className="flex justify-center gap-4">
             <button className="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg transition-all duration-300 transform hover:scale-105">
@@ -37,7 +42,7 @@ const LandingPage: React.FC = () => {
       <section className="py-20 bg-black/95">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <motion.h2 
+            <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -45,7 +50,7 @@ const LandingPage: React.FC = () => {
             >
               Your Digital Knowledge Hub
             </motion.h2>
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
@@ -66,12 +71,8 @@ const LandingPage: React.FC = () => {
                 <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-4">
                   {feature.icon}
                 </div>
-                <h3 className="text-xl font-semibold mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-300">
-                  {feature.description}
-                </p>
+                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                <p className="text-gray-300">{feature.description}</p>
               </motion.div>
             ))}
           </div>
@@ -82,7 +83,7 @@ const LandingPage: React.FC = () => {
       <section className="py-20 bg-black/94">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <motion.h2 
+            <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -90,7 +91,7 @@ const LandingPage: React.FC = () => {
             >
               Store Everything You Need
             </motion.h2>
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
@@ -133,7 +134,8 @@ const LandingPage: React.FC = () => {
                 Start Building Your Second Brain Today
               </h2>
               <p className="text-purple-100 mb-8 max-w-2xl mx-auto">
-                Join thousands of knowledge workers who are already using Brainly to organize their digital life.
+                Join thousands of knowledge workers who are already using
+                Brainly to organize their digital life.
               </p>
               <button className="px-8 py-3 bg-white text-purple-600 rounded-lg hover:bg-purple-50 transition-all duration-200 transform hover:scale-105">
                 Get Started for Free
@@ -142,6 +144,49 @@ const LandingPage: React.FC = () => {
           </motion.div>
         </div>
       </section>
+      <DeferredLoad>
+        <footer className="bg-black/95 border-t border-gray-800">
+          <div className="container mx-auto px-4 py-6">
+            <div className="flex flex-col md:flex-row justify-between items-center">
+              <div className="flex items-center space-x-2 mb-4 md:mb-0">
+                <IconBrain className="w-6 h-6 text-purple-500" />
+                <span className="text-lg font-semibold">Brainly</span>
+              </div>
+              <div className="flex space-x-6">
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  About
+                </a>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Privacy
+                </a>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Terms
+                </a>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  Contact
+                </a>
+              </div>
+            </div>
+            <div className="mt-6 text-center text-gray-400 text-sm">
+              <p>
+                &copy; {new Date().getFullYear()} Brainly. All rights reserved.
+              </p>
+            </div>
+          </div>
+        </footer>
+      </DeferredLoad>
     </div>
   );
 };
