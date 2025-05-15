@@ -23,7 +23,7 @@ export function OAuthCallback() {
         } else {
           // If token isn't in the URL, we might need to get it from the session
           // This depends on how your backend handles OAuth flows
-          const response = await axios.get('http://localhost:5000/oauth/session', {
+          const response = await axios.get('https://api-brainly.onrender.com/oauth/session', {
             withCredentials: true
           });
           

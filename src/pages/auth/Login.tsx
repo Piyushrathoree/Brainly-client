@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { IconBrandGithub, IconBrandGoogle } from "@tabler/icons-react";
 import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
 interface LoginFormData {
   email: string;
@@ -17,7 +19,7 @@ export function Login() {
     password: "",
   });
   const { LoginUser, loginWithGoogle, loginWithGithub, isLoading } = useAuth();
-
+  const navigate = useNavigate();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData((prev) => ({
@@ -32,14 +34,18 @@ export function Login() {
   };
 
   return (
-    <div className="shadow-input mx-auto w-full max-w-md rounded-none text-slate-300 bg-black p-4 md:rounded-2xl md:p-8 border border-slate-800 dark">
+    <div className="shadow-input mx-auto w-full max-w-md rounded-none text-slate-300 bg-black p-4 md:rounded-2xl md:p-8 border border-slate-800 dark my-[8vh]">
       <h2 className="text-xl font-bold text-slate-200">Welcome to Brainly</h2>
       <p className="mt-2 max-w-sm text-sm text-slate-300">
         Login to Brainly if you can because we don&apos;t have a login flow yet
       </p>
-
+      <button
+        className="flex gap-1 items-center absolute top-24 left-48 duration-400 hover:-translate-y-0.5  rounded-md py-1 px-2  bg-slate-800/20"
+        onClick={() => navigate("/")}
+      >
+        {<ArrowLeft size={16} />}Back
+      </button>
       <form className="my-8" onSubmit={handleSubmit}>
-       
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email">Email Address</Label>
           <Input
@@ -49,6 +55,8 @@ export function Login() {
             value={formData.email}
             onChange={handleChange}
             required
+            className="text-slate-300"
+            autoComplete="email"
           />
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
@@ -61,6 +69,7 @@ export function Login() {
             onChange={handleChange}
             required
             minLength={8}
+            className="text-slate-300"
           />
         </LabelInputContainer>
 
@@ -97,6 +106,15 @@ export function Login() {
               Sign in with Google
             </span>
             <BottomGradient />
+          </button>
+        </div>
+        <div className="text-sm text-slate-400 mt-4 -mb-10">
+          Don&apos;t have an account?{" "}
+          <button
+            onClick={() => navigate("/signup")}
+            className=" duration-300 hover:underline hover:text-slate-300"
+          >
+            Register
           </button>
         </div>
       </form>

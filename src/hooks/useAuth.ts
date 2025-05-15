@@ -18,7 +18,7 @@ export const useAuth = () => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/register",
+        `${import.meta.env.VITE_SERVER_URL}/register`,
         formData,
         {
           withCredentials: true
@@ -27,56 +27,53 @@ export const useAuth = () => {
       console.log(response.data);
 
 
-      if (response.status === 200) {
-        // Handle successful signup
-        const data = response.data;
-        console.log(data);
-        localStorage.setItem("token", data.token);
-        // document.cookie = `token=${data.token}; path=/; SameSite=None; Secure`;
-        toast.success("Signup successfull ")
-        navigate("/dashboard");
-      } else {
-        // Handle error
-        console.error("Signup failed:", response.data);
-        toast.error("Signup failed. Please try again.");
-      }
+      // Handle successful signup
+      const data = response.data;
+      console.log(data);
+      localStorage.setItem("token", data.token);
+      document.cookie = `token=${data.token}; path=/; SameSite=None; Secure`;
+      toast.success("Signup successfull ")
+      navigate("/dashboard");
+
     } catch (error) {
       console.error("Signup error:", error);
-      toast.error("An error occurred during signup.");
+      const errorMessage =
+        axios.isAxiosError(error) && error.response?.data?.message
+          ? error.response.data.message
+          : "Signup failed. Please check your credentials and try again."
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
   };
-  const LoginUser = async (formData: FormData) => {
+
+  const   LoginUser = async (formData: FormData) => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/login",
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/login`,
         formData,
         {
           withCredentials: true
         }
       );
 
-      if (response.status === 200) {
+      
         // Handle successful login
         const data = response.data;
         console.log(data);
         localStorage.setItem("token", data.token);
-        // document.cookie = `token=${data.token}; path=/; SameSite=None; Secure`;
-        toast.success("Login successfully ")
+        document.cookie = `token=${data.token}; path=/; SameSite=None; Secure`;
+        toast.success(response?.data?.message)
         navigate("/dashboard");
-      } else {
-        // Handle error
-        toast.error(response.data?.message || "Login failed. Please try again.");
-        console.error("Login failed:", response.data);
-      }
+      
+      
     } catch (error: unknown) {
       console.error("Login error:", error);
       // Display error message from API if available, otherwise show a generic message
-      const errorMessage = 
-        axios.isAxiosError(error) && error.response?.data?.message 
-          ? error.response.data.message 
+      const errorMessage =
+        axios.isAxiosError(error) && error.response?.data?.message
+          ? error.response.data.message
           : "Login failed. Please check your credentials and try again.";
       toast.error(errorMessage);
     } finally {
@@ -87,7 +84,7 @@ export const useAuth = () => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/verify",
+        `${import.meta.env.VITE_SERVER_URL}/verify`,
         { verificationCode: formData.code },
         {
 
@@ -104,9 +101,9 @@ export const useAuth = () => {
     } catch (error: unknown) {
       console.log(error);
       // Display error message from API if available, otherwise show a generic message
-      const errorMessage = 
-        axios.isAxiosError(error) && error.response?.data?.message 
-          ? error.response.data.message 
+      const errorMessage =
+        axios.isAxiosError(error) && error.response?.data?.message
+          ? error.response.data.message
           : "Verification failed. Please try again.";
       toast.error(errorMessage);
     } finally {
@@ -117,12 +114,12 @@ export const useAuth = () => {
   // OAuth login methods
   const loginWithGoogle = () => {
     setIsLoading(true);
-    window.location.href = "http://localhost:5000/oauth/google";
+    window.location.href = `${import.meta.env.VITE_SERVER_URL}/oauth/google`
   };
 
   const loginWithGithub = () => {
     setIsLoading(true);
-    window.location.href = "http://localhost:5000/oauth/github";
+    window.location.href = `${import.meta.env.VITE_SERVER_URL}/oauth/github`;
   };
 
   // Logout function
@@ -131,12 +128,20 @@ export const useAuth = () => {
     try {
       // Clear local storage token
       localStorage.removeItem('token');
-      
+
       // Call server logout endpoint to clear cookies/session if needed
-      await axios.get('http://localhost:5000/oauth/logout', {
-        withCredentials: true
-      });
-      
+      const isOauth = !!localStorage.getItem('oauth'); // Assume you store a flag when logging in via OAuth
+      if (isOauth) {
+        await axios.get(`${import.meta.env.VITE_SERVER_URL}/logout`, {
+          withCredentials: true
+        });
+        localStorage.removeItem('oauth');
+      } else {
+        await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/v1/logout`, {
+          withCredentials: true
+        });
+      }
+
       toast.success('Logged out successfully');
       navigate('/login');
     } catch (error) {
@@ -148,6 +153,7 @@ export const useAuth = () => {
       setIsLoading(false);
     }
   };
+
 
   return { registerUser, LoginUser, VerifyCode, loginWithGoogle, loginWithGithub, logout, isLoading };
 };

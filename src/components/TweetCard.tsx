@@ -1,51 +1,85 @@
-import React from 'react';
-import { IconShare, IconDots } from '@tabler/icons-react';
+import React from "react";
+import { IconBrandTwitter, IconShare } from "@tabler/icons-react";
+import { Trash2 } from "lucide-react";
+import { MessageLoading } from "./ui/message-loading";
 
 interface TweetCardProps {
-  title?: string;
-  tweetUrl: string;
+  title: string;
+  link: string;
   tags: string[];
-  date: string;
+  date: Date;
 }
 
 const getTweetId = (url: string) => {
   // Extract the tweet ID from the URL
   const match = url.match(/status\/(\d+)/);
-  return match ? match[1] : '';
+  return match ? match[1] : "";
 };
 
-const TweetCard: React.FC<TweetCardProps> = ({ title, tweetUrl, tags, date }) => {
-  const tweetId = getTweetId(tweetUrl);
+const TweetCard: React.FC<TweetCardProps> = ({ title, link, tags, date }) => {
+  const tweetId = getTweetId(link);
   return (
-    <div className="bg-black/80 border border-gray-800 rounded-xl p-6 shadow-lg flex flex-col gap-3 relative min-h-[180px] max-h-[320px]">
+    <div className="bg-black/80 border border-gray-800 rounded-xl p-6 shadow-lg flex flex-col gap-3  h-96 relative ">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-lg font-bold text-white truncate">{title}</span>
+        <span className="text-lg font-bold text-white truncate flex items-center gap-2">
+          <span>
+            <IconBrandTwitter className="text-purple-500 size-5" />
+          </span>
+          {title}
+        </span>
         <div className="flex gap-2">
-          <button className="text-gray-500 hover:text-purple-400"><IconShare className="w-4 h-4" /></button>
-          <button className="text-gray-500 hover:text-red-400"><IconDots className="w-4 h-4" /></button>
+          <button className="text-gray-500 hover:text-purple-400">
+            <IconShare className="w-5 h-5" />
+          </button>
+          <button className="text-gray-500 hover:text-red-400">
+            <Trash2 className="w-5 h-5" />
+          </button>
         </div>
       </div>
       {tweetId ? (
-        <div className="rounded-lg overflow-hidden w-full" style={{ minHeight: 120, height: 180 }}>
-          <iframe
-            title="Embedded Tweet"
-            className="w-full h-full"
-            style={{ border: 'none', overflow: 'hidden', minHeight: 120, height: 180 }}
-            src={`https://twitframe.com/show?url=${encodeURIComponent(tweetUrl)}`}
-            allowFullScreen
-          />
+        <div
+          className="rounded-md  w-full h-[90%] mb-7"
+          style={{
+            overflow: "scroll",
+            overflowX: "hidden",
+            position: "relative",
+          }}
+        >
+          <blockquote className="twitter-tweet">
+            <a
+              href={link.replace("x.com", "twitter.com")}
+              className="text-gray-300 flex gap-2 items-center justify-center h-[300px]"
+            >
+              {" "}
+              <MessageLoading />
+            </a>
+          </blockquote>{" "}
+          <script
+            async
+            src="https://platform.twitter.com/widgets.js"
+            charSet="utf-8"
+          ></script>
         </div>
       ) : (
         <div className="text-gray-400">Invalid tweet link</div>
       )}
-      <div className="flex flex-wrap gap-2 mb-2">
-        {tags.map((tag, idx) => (
-          <span key={idx} className="bg-purple-900/40 text-purple-300 px-2 py-1 rounded text-xs font-medium">{tag}</span>
-        ))}
+      <div className="absolute bottom-5  flex items-center gap-5">
+        <span className="text-xs text-gray-500 border border-slate-600 py-1 px-3 rounded-xl">
+          Added on {date.toLocaleDateString()}
+        </span>
+        <div className="flex  gap-3  text-sm items-center font-raleway ">
+          {tags.map((tag, idx) => (
+            <span
+              key={idx}
+              className="bg-purple-900/40 text-purple-300  text-xs font-medium border border-slate-600 py-0.5 px-3 rounded-2xl"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
       </div>
-      <span className="text-xs text-gray-500">Added on {date}</span>
     </div>
   );
 };
 
-export default TweetCard; 
+export default TweetCard;
