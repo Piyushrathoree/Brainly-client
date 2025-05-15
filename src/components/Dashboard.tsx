@@ -24,69 +24,6 @@ import DocumentCard from "./DocumentCard";
 import LinkCard from "./LinkCard";
 import { NotebookText } from "lucide-react";
 
-const videos = [
-  {
-    title: "React Conf 2021",
-    videoUrl: "https://www.youtube.com/watch?v=dGcsHMXbSOA",
-    tags: ["#react", "#conference"],
-    date: "10/03/2024",
-  },
-  {
-    title: "Build a Second Brain",
-    videoUrl: "https://www.youtube.com/watch?v=2X3A9b1cOe8",
-    tags: ["#productivity", "#brain"],
-    date: "09/03/2024",
-  },
-  {
-    title: "Productivity Tips",
-    videoUrl: "https://www.youtube.com/watch?v=V1Pl8CzNzCw",
-    tags: ["#productivity", "#tips"],
-    date: "08/03/2024",
-  },
-];
-
-const documents = [
-  {
-    title: "Personal Knowledge Base.pdf",
-    docUrl: "https://example.com/pkb.pdf",
-    tags: ["#pdf", "#knowledge"],
-    date: "10/03/2024",
-  },
-  {
-    title: "Habit Tracker.xlsx",
-    docUrl: "https://example.com/habit-tracker.xlsx",
-    tags: ["#excel", "#habits"],
-    date: "09/03/2024",
-  },
-  {
-    title: "Minimalist Todo App.docx",
-    docUrl: "https://example.com/todo-app.docx",
-    tags: ["#word", "#todo"],
-    date: "08/03/2024",
-  },
-];
-
-const links = [
-  {
-    title: "OpenAI",
-    url: "https://openai.com",
-    tags: ["#ai", "#openai"],
-    date: "10/03/2024",
-  },
-  {
-    title: "React Docs",
-    url: "https://react.dev",
-    tags: ["#react", "#docs"],
-    date: "09/03/2024",
-  },
-  {
-    title: "Notion",
-    url: "https://notion.so",
-    tags: ["#productivity", "#notion"],
-    date: "08/03/2024",
-  },
-];
-
 const tags = [
   "#productivity",
   "#ideas",
@@ -138,6 +75,7 @@ const sidebarLinks = [
 ];
 
 const Dashboard = () => {
+
   const type = localStorage.getItem("type");
   const [selectedSection, setSelectedSection] = useState<SectionType>(
     type as SectionType
@@ -274,7 +212,7 @@ const Dashboard = () => {
                 ))}
               {selectedSection === "videos" &&
                 contentData.videos.map((video, idx) => (
-                  <VideoCard  
+                  <VideoCard
                     key={idx}
                     title={video.title}
                     link={video.link}
@@ -283,46 +221,6 @@ const Dashboard = () => {
                     content={video.content}
                   />
                 ))}
-              {/* {selectedSection === "tweets" &&
-                    tweets.map((tweet, idx) => (
-                      <TweetCard
-                        key={idx}
-                        title={tweet.title}
-                        tweetUrl={tweet.tweetUrl}
-                        tags={tweet.tags}
-                        date={new Date(tweet.createdAt)}
-                      />
-                    ))}
-                  {selectedSection === "videos" &&
-                    videos.map((video, idx) => (
-                      <VideoCard
-                        key={idx}
-                        title={video.title}
-                        videoUrl={video.videoUrl}
-                        tags={video.tags}
-                        date={new Date(video.createdAt)}
-                      />
-                    ))}
-                  {selectedSection === "documents" &&
-                    documents.map((doc, idx) => (
-                      <DocumentCard
-                        key={idx}
-                        title={doc.title}
-                        docUrl={doc.docUrl}
-                        tags={doc.tags}
-                        date={new Date(doc.createdAt)}
-                      />
-                    ))}
-                  {selectedSection === "links" &&
-                    links.map((link, idx) => (
-                      <LinkCard
-                        key={idx}
-                        title={link.title}
-                        url={link.url}
-                        tags={link.tags}
-                        date={new Date(link.createdAt)}
-                      />
-                    ))} */}
             </div>
           )}
         </div>
