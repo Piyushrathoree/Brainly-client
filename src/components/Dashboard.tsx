@@ -23,28 +23,12 @@ import VideoCard from "./VideoCard";
 import DocumentCard from "./DocumentCard";
 import LinkCard from "./LinkCard";
 import { NotebookText } from "lucide-react";
+import useGetTags from "@/hooks/useGetTags";
 
-const tags = [
-  "#productivity",
-  "#ideas",
-  "#learning",
-  "#ai",
-  "#openai",
-  "#react",
-  "#conference",
-  "#brain",
-  "#tips",
-  "#pdf",
-  "#knowledge",
-  "#excel",
-  "#habits",
-  "#word",
-  "#todo",
-  "#docs",
-  "#notion",
-  "#naval",
-  "#news",
-];
+interface Tag {
+  title: string;
+  // add other properties if needed
+}
 
 type SectionType =
   | "notes"
@@ -85,11 +69,14 @@ const Dashboard = () => {
 
   const handleAddContent = (data: ContentData) => {};
   const { getData, loading, contentData } = useGetData();
+  const { getTags, tags, loading: tagsLoading } = useGetTags();
   useEffect(() => {
     getData();
-  }, []);
+    getTags();
+  },[]);
+  
 
-  if (loading) {
+  if (loading || tagsLoading) {
     return (
       <div className="flex items-center justify-center h-full">
         <span className="text-gray-500 text-xl  ">
@@ -156,13 +143,13 @@ const Dashboard = () => {
         <div className="group flex-1 overflow-y-auto card-scrollbar px-10 py-8 ">
           {selectedSection === "tags" ? (
             <div className="flex flex-wrap gap-3">
-              {tags.map((tag, idx) => (
-                <span
-                  key={idx}
-                  className="bg-purple-900/40 text-purple-300 dark:bg-purple-900/40 dark:text-purple-300 px-4 py-2 rounded-full text-base font-medium shadow border border-purple-800"
-                >
-                  {tag}
-                </span>
+              {tags.map((tag: Tag, idx: number) => (
+              <span
+                key={idx}
+                className="bg-purple-900/40 text-purple-300 dark:bg-purple-900/40 dark:text-purple-300 px-4 py-2 rounded-full text-base font-medium shadow border border-purple-800"
+              >
+                {tag.title}
+              </span>
               ))}
             </div>
           ) : (
