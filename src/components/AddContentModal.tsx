@@ -14,8 +14,9 @@ import {
   IconVideo,
   IconLink,
 } from "@tabler/icons-react";
+import { BookText } from "lucide-react";
 
-type ContentType = "note" | "tweet" | "video" | "link";
+type ContentType = "note" | "tweet" | "video" | "link" | "document";
 
 interface ContentData {
   type: ContentType;
@@ -37,7 +38,7 @@ const AddContentModal: React.FC<AddContentModalProps> = ({
   onSubmit,
 }) => {
   const [contentType, setContentType] = React.useState<
-    "note" | "tweet" | "video" | "link"
+    "note" | "tweet" | "video" | "link" | "document"
   >("note");
   const [title, setTitle] = React.useState("");
   const [url, setUrl] = React.useState("");
@@ -58,7 +59,7 @@ const AddContentModal: React.FC<AddContentModalProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[500px] max-w-[440px] rounded-xl">
         <DialogHeader>
           <DialogTitle>Add New Content</DialogTitle>
           <DialogDescription>
@@ -68,36 +69,44 @@ const AddContentModal: React.FC<AddContentModalProps> = ({
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 gap-2">
             <Button
-              variant={contentType === "note" ? "default" : "outline"}
-              className="flex flex-col items-center gap-2 h-auto py-3 border-gray-700 bg-purple-900/20 text-purple-300 hover:text-purple-3000"
+              variant={contentType === "note" ? "outline" : "default"}
+              className="flex flex-col items-center gap-2 h-auto py-3 border-gray-700 bg-purple-900/20 text-purple-300 hover:bg-purple-500/20 hover:text-purple-300"
               onClick={() => setContentType("note")}
             >
               <IconFileText className="w-5 h-5" />
               <span className="text-xs">Note</span>
             </Button>
             <Button
-              variant={contentType === "tweet" ? "default" : "outline"}
-              className="flex flex-col items-center gap-2 h-auto py-3 border-gray-700 bg-purple-900/20 text-purple-300 hover:text-purple-3000"
+              variant={contentType === "tweet" ? "outline" : "default"}
+              className="flex flex-col items-center gap-2 h-auto py-3 border-gray-700 bg-purple-900/20 text-purple-300 hover:bg-purple-500/20 hover:text-purple-300"
               onClick={() => setContentType("tweet")}
             >
               <IconBrandTwitter className="w-5 h-5" />
               <span className="text-xs">Tweet</span>
             </Button>
             <Button
-              variant={contentType === "video" ? "default" : "outline"}
-              className="flex flex-col items-center gap-2 h-auto py-3 border-gray-700 bg-purple-900/20 text-purple-300 hover:text-purple-3000"
+              variant={contentType === "video" ? "outline" : "default"}
+              className="flex flex-col items-center gap-2 h-auto py-3 border-gray-700 bg-purple-900/20 text-purple-300 hover:bg-purple-500/20 hover:text-purple-300"
               onClick={() => setContentType("video")}
             >
               <IconVideo className="w-5 h-5" />
               <span className="text-xs">Video</span>
             </Button>
             <Button
-              variant={contentType === "link" ? "default" : "outline"}
-              className="flex flex-col items-center gap-2 h-auto py-3 border-gray-700 bg-purple-900/20 text-purple-300 hover:text-purple-3000"
+              variant={contentType === "link" ? "outline" : "default"}
+              className="flex flex-col items-center gap-2 h-auto py-3 border-gray-700 bg-purple-900/20 text-purple-300 hover:bg-purple-500/20 hover:text-purple-300"
               onClick={() => setContentType("link")}
             >
               <IconLink className="w-5 h-5" />
               <span className="text-xs">Link</span>
+            </Button>
+            <Button
+              variant={contentType === "document" ? "outline" : "default"}
+              className="flex flex-col items-center gap-2 h-auto py-3 border-gray-700 bg-purple-900/20 text-purple-300 hover:bg-purple-500/20 hover:text-purple-300 "
+              onClick={() => setContentType("document")}
+            >
+              <BookText className="w-5 h-5" />
+              <span className="text-xs">Document</span>
             </Button>
           </div>
 
@@ -141,6 +150,20 @@ const AddContentModal: React.FC<AddContentModalProps> = ({
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   placeholder="Enter your note content"
+                  className="w-full min-h-[100px] rounded-md border border-gray-700 bg-black/50 text-white p-2 placeholder:text-gray-500 outline-none"
+                  required
+                />
+              </div>
+            )}
+            {contentType === "document" && (
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-300">
+                  Content
+                </label>
+                <textarea
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  placeholder="Enter your document content"
                   className="w-full min-h-[100px] rounded-md border border-gray-700 bg-black/50 text-white p-2 placeholder:text-gray-500 outline-none"
                   required
                 />

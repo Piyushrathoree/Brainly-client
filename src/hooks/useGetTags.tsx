@@ -1,0 +1,40 @@
+import axios from "axios";
+import { useState } from "react";
+import toast from "react-hot-toast";
+
+interface Tag {
+  _id: string;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+}
+const useGetTags = () => {
+  const [tags, setTags] = useState<Tag[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const getTags = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/v1/tags/All`,
+        { withCredentials: false }
+      );
+      console.log("Tags fetched successfully:", response.data);
+
+      setTags(response.data);
+    } catch (error) {
+      console.error("Error fetching tags:", error);
+      const errorMessage =
+        axios.isAxiosError(error) && error.response?.data?.message
+          ? error.response.data.message
+          : "Something went wrong. Please refresh the page";
+      toast.error(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { getTags, tags, loading };
+};
+
+export default useGetTags;
