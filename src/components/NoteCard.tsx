@@ -5,7 +5,7 @@ import {  NotebookText, Trash2 } from 'lucide-react';
 interface NoteCardProps {
   title: string;
   link: string;
-  content: string;
+  content?: string;
   tags: string[];
   date: Date;
 }

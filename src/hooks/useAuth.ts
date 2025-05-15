@@ -31,7 +31,6 @@ export const useAuth = () => {
       const data = response.data;
       console.log(data);
       localStorage.setItem("token", data.token);
-      document.cookie = `token=${data.token}; path=/; SameSite=None; Secure`;
       toast.success("Signup successfull ")
       navigate("/dashboard");
 
@@ -47,7 +46,7 @@ export const useAuth = () => {
     }
   };
 
-  const   LoginUser = async (formData: FormData) => {
+  const LoginUser = async (formData: FormData) => {
     setIsLoading(true);
     try {
       const response = await axios.post(
@@ -63,7 +62,6 @@ export const useAuth = () => {
         const data = response.data;
         console.log(data);
         localStorage.setItem("token", data.token);
-        document.cookie = `token=${data.token}; path=/; SameSite=None; Secure`;
         toast.success(response?.data?.message)
         navigate("/dashboard");
       
