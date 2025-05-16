@@ -18,19 +18,17 @@ export const useAuth = () => {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/register`,
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/register`,
         formData,
         {
           withCredentials: true
         }
       );
-      console.log(response.data);
-
 
       // Handle successful signup
       const data = response.data;
-      console.log(data);
       localStorage.setItem("token", data.token);
+      localStorage.setItem("shareCode" , data.user?.shareCode)
       toast.success("Signup successfull ")
       navigate("/dashboard");
 
@@ -57,15 +55,16 @@ export const useAuth = () => {
         }
       );
 
-      
-        // Handle successful login
-        const data = response.data;
-        console.log(data);
-        localStorage.setItem("token", data.token);
-        toast.success(response?.data?.message)
-        navigate("/dashboard");
-      
-      
+
+      // Handle successful login
+      const data = response.data;
+      console.log(data);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("shareCode", data.user?.shareCode)
+      toast.success(response?.data?.message)
+      navigate("/dashboard");
+
+
     } catch (error: unknown) {
       console.error("Login error:", error);
       // Display error message from API if available, otherwise show a generic message

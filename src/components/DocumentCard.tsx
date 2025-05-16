@@ -1,5 +1,5 @@
 import React from "react";
-import { IconFileText, IconShare } from "@tabler/icons-react";
+import { IconFileText } from "@tabler/icons-react";
 import { ArrowUpRightFromSquare, Trash2 } from "lucide-react";
 
 interface DocumentCardProps {
@@ -18,9 +18,7 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
   date,
 }) => {
   return (
-    <div
-      className="bg-black/80 border border-gray-800 rounded-xl p-6 shadow-lg flex flex-col gap-3 relative min-h-[250px] max-h-[350px]"
-    >
+    <div className="bg-black/80 border border-gray-800 rounded-xl p-6 shadow-lg flex flex-col gap-3 relative min-h-[250px] max-h-[350px]">
       <div className="flex items-center justify-between mb-2 relative">
         <div className="flex items-center gap-2">
           <IconFileText className="w-5 h-5 text-purple-400" />
@@ -32,9 +30,7 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
           <a className="text-gray-500 hover:text-blue-400" href={link}>
             <ArrowUpRightFromSquare className="w-5 h-5" />
           </a>
-          <button className="text-gray-500 hover:text-purple-400">
-            <IconShare className="w-5 h-5" />
-          </button>
+
           <button className="text-gray-500 hover:text-red-400">
             <Trash2 className="w-5 h-5" />
           </button>

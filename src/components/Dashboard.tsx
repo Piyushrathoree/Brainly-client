@@ -7,6 +7,7 @@ import {
   IconHash,
   IconShare,
   IconPlus,
+  IconRefresh,
 } from "@tabler/icons-react";
 // import NoteCard from "./NoteCard";
 // import TweetCard from "./TweetCard";
@@ -24,6 +25,8 @@ import DocumentCard from "./DocumentCard";
 import LinkCard from "./LinkCard";
 import { NotebookText } from "lucide-react";
 import useGetTags from "@/hooks/useGetTags";
+import useAddContent from "@/hooks/useAddContent";
+import toast from "react-hot-toast";
 
 interface Tag {
   title: string;
@@ -44,9 +47,9 @@ interface ContentData {
   type: ContentType;
   title: string;
   url?: string;
-  tags: string[];
+  tags?: string[];
   content?: string;
-  date: Date;
+  date?: Date;
 }
 
 const sidebarLinks = [
@@ -59,22 +62,59 @@ const sidebarLinks = [
 ];
 
 const Dashboard = () => {
-
   const type = localStorage.getItem("type");
   const [selectedSection, setSelectedSection] = useState<SectionType>(
     type as SectionType
   );
+  // Track previous section to detect transition to "tweets"
+  const [prevSection, setPrevSection] = useState<SectionType | null>(null);
+
+  useEffect(() => {
+    if (
+      prevSection &&
+      prevSection !== "tweets" &&
+      selectedSection === "tweets"
+    ) {
+      toast.error("You tweets can't be refreshed please refresh the page");
+      // location.reload();
+    }
+    setPrevSection(selectedSection);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedSection]);
   const [isAddContentOpen, setIsAddContentOpen] = useState(false);
   const [isShareBrainOpen, setIsShareBrainOpen] = useState(false);
 
-  const handleAddContent = (data: ContentData) => {};
-  const { getData, loading, contentData } = useGetData();
+  const { addContent } = useAddContent();
+
+  const handleAddContent = (details: ContentData) => {
+    addContent({
+      title: details.title,
+      content: details.content,
+      link: details.url,
+      tags: details.tags,
+      type: details.type,
+    });
+  };
+  const { getData, loading, contentData, refreshData } = useGetData();
   const { getTags, tags, loading: tagsLoading } = useGetTags();
+
   useEffect(() => {
+    // Initial data fetch
     getData();
     getTags();
-  },[]);
-  
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Add refresh functionality
+  const handleRefresh = () => {
+    if (selectedSection === "tweets") {
+      toast.error("You tweets can't be refreshed please refresh the page");
+      return;
+    }
+    refreshData();
+    getTags();
+  };
 
   if (loading || tagsLoading) {
     return (
@@ -91,7 +131,7 @@ const Dashboard = () => {
       {/* Sidebar */}
       <aside className="w-64 bg-card border-r border-border flex flex-col items-center py-4 -mt-4">
         <div className="flex items-center -ml-18 mb-10 justify-start">
-          <span className="text-xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+          <span className="text-xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent shadow-lg">
             Dashboard
           </span>
         </div>
@@ -125,6 +165,12 @@ const Dashboard = () => {
           </h1>
           <div className="flex gap-3">
             <button
+              className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-900 hover:bg-gray-700 text-white font-semibold shadow transition-colors"
+              onClick={handleRefresh}
+            >
+              <IconRefresh className="w-5 h-5" />
+            </button>
+            <button
               className="flex items-center gap-2 px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-semibold shadow transition-colors"
               onClick={() => setIsShareBrainOpen(true)}
             >
@@ -144,12 +190,12 @@ const Dashboard = () => {
           {selectedSection === "tags" ? (
             <div className="flex flex-wrap gap-3">
               {tags.map((tag: Tag, idx: number) => (
-              <span
-                key={idx}
-                className="bg-purple-900/40 text-purple-300 dark:bg-purple-900/40 dark:text-purple-300 px-4 py-2 rounded-full text-base font-medium shadow border border-purple-800"
-              >
-                {tag.title}
-              </span>
+                <span
+                  key={idx}
+                  className="bg-purple-900/40 text-purple-300 dark:bg-purple-900/40 dark:text-purple-300 px-4 py-2 rounded-full text-base font-medium shadow border border-purple-800"
+                >
+                  {tag.title}
+                </span>
               ))}
             </div>
           ) : (
@@ -213,18 +259,18 @@ const Dashboard = () => {
         </div>
       </main>
 
-      {/* Modals */}
       <AddContentModal
         isOpen={isAddContentOpen}
         onClose={() => setIsAddContentOpen(false)}
         onSubmit={handleAddContent}
       />
+
       <ShareBrainDialog
         isOpen={isShareBrainOpen}
         onClose={() => setIsShareBrainOpen(false)}
-        shareUrl={`${window.location.origin}/share/${Math.random()
-          .toString(36)
-          .substring(7)}`}
+        shareUrl={`${window.location.origin}/share/${localStorage.getItem(
+          "shareCode"
+        )}`}
       />
     </div>
   );

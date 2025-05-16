@@ -1,5 +1,5 @@
 import React from "react";
-import { IconBrandTwitter, IconShare } from "@tabler/icons-react";
+import { IconBrandTwitter } from "@tabler/icons-react";
 import { Trash2 } from "lucide-react";
 import { MessageLoading } from "./ui/message-loading";
 
@@ -28,9 +28,6 @@ const TweetCard: React.FC<TweetCardProps> = ({ title, link, tags, date }) => {
           {title}
         </span>
         <div className="flex gap-2">
-          <button className="text-gray-500 hover:text-purple-400">
-            <IconShare className="w-5 h-5" />
-          </button>
           <button className="text-gray-500 hover:text-red-400">
             <Trash2 className="w-5 h-5" />
           </button>
