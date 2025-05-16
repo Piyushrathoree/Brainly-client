@@ -19,8 +19,6 @@ const useGetTags = () => {
         `http://localhost:5000/api/v1/tags/All`,
         { withCredentials: false }
       );
-      console.log("Tags fetched successfully:", response.data);
-
       setTags(response.data);
     } catch (error) {
       console.error("Error fetching tags:", error);
@@ -33,7 +31,7 @@ const useGetTags = () => {
       setLoading(false);
     }
   };
-
+  
   return { getTags, tags, loading };
 };
 

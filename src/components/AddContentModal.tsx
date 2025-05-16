@@ -18,7 +18,7 @@ import { BookText } from "lucide-react";
 
 type ContentType = "note" | "tweet" | "video" | "link" | "document";
 
-interface ContentData {
+export interface ContentData {
   type: ContentType;
   title: string;
   url?: string;
@@ -44,6 +44,7 @@ const AddContentModal: React.FC<AddContentModalProps> = ({
   const [url, setUrl] = React.useState("");
   const [tags, setTags] = React.useState("");
   const [content, setContent] = React.useState("");
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

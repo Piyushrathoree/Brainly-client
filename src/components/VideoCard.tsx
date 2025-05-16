@@ -1,5 +1,4 @@
 import React from "react";
-import { IconShare } from "@tabler/icons-react";
 import { Trash2 } from "lucide-react";
 
 interface VideoCardProps {
@@ -30,9 +29,6 @@ const VideoCard: React.FC<VideoCardProps> = ({
       <div className="flex items-center justify-between mb-2">
         <span className="text-lg font-bold text-white truncate">{title}</span>
         <div className="flex gap-2">
-          <button className="text-gray-500 hover:text-purple-400">
-            <IconShare className="w-5 h-5" />
-          </button>
           <button className="text-gray-500 hover:text-red-400">
             <Trash2 className="w-5 h-5" />
           </button>
@@ -41,7 +37,7 @@ const VideoCard: React.FC<VideoCardProps> = ({
       {videoId ? (
         <div
           className="rounded-lg overflow-hidden w-full"
-          style={{ minHeight: 120, height: 180 , width: "100%" }}
+          style={{ minHeight: 120, height: 180, width: "100%" }}
         >
           <iframe
             title="Embedded YouTube Video"
