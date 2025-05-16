@@ -15,7 +15,7 @@ const Login = lazy(() => import("./pages/auth/Login").then(module => ({ default:
 const Verify = lazy(() => import("./pages/auth/Verify").then(module => ({ default: module.Verify })));
 const Dashboard = lazy(() => import("./components/Dashboard"));
 const OAuthCallback = lazy(() => import("./pages/auth/OAuthCallback").then(module => ({ default: module.OAuthCallback })));
-const Profile = lazy(() => import("./pages/Profile"));
+// const Profile = lazy(() => import("./pages/Profile"));
 const Questions = lazy(() => import("./pages/Questions"));
 
 // Loading fallback
@@ -96,11 +96,11 @@ const App: React.FC = () => {
                 <Questions />
               </ProtectedRoute>
             } />
-            <Route path="profile" element={
+            {/* <Route path="profile" element={
               <ProtectedRoute>
                 <Profile />
               </ProtectedRoute>
-            } />
+            } /> */}
           </Route>
           {/* Auth callback routes outside of Layout */}
           <Route path="/auth/callback" element={<OAuthCallback />} />

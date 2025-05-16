@@ -1,5 +1,5 @@
 import React from "react";
-import { IconLink, IconShare } from "@tabler/icons-react";
+import { IconLink } from "@tabler/icons-react";
 import { Trash2 } from "lucide-react";
 
 interface LinkCardProps {
@@ -21,9 +21,6 @@ const LinkCard: React.FC<LinkCardProps> = ({ title, link  , tags, date , content
           </span>
         </div>
         <div className="flex gap-4 ">
-          <button className="text-gray-500 hover:text-purple-400">
-            <IconShare className="w-5 h-5" />
-          </button>
           <button className="text-gray-500 hover:text-red-400">
             <Trash2 className="w-5 h-5" />
           </button>

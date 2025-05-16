@@ -1,6 +1,5 @@
-import React from 'react';
-import { IconShare } from '@tabler/icons-react';
-import {  NotebookText, Trash2 } from 'lucide-react';
+import React from "react";
+import { NotebookText, Trash2 } from "lucide-react";
 
 interface NoteCardProps {
   title: string;
@@ -10,7 +9,13 @@ interface NoteCardProps {
   date: Date;
 }
 
-const NoteCard: React.FC<NoteCardProps> = ({ title, link  , tags, date, content  }) => {
+const NoteCard: React.FC<NoteCardProps> = ({
+  title,
+  link,
+  tags,
+  date,
+  content,
+}) => {
   return (
     <div className="bg-black/80 border border-gray-800 rounded-xl p-6 shadow-lg h-80  flex flex-col gap-3 relative">
       <div className="flex items-center justify-between mb-2">
@@ -21,9 +26,6 @@ const NoteCard: React.FC<NoteCardProps> = ({ title, link  , tags, date, content 
           {title}
         </h2>
         <div className="flex gap-4">
-          <button className="text-gray-500 hover:text-purple-400">
-            <IconShare className="w-5 h-5" />
-          </button>
           <button className="text-gray-500 hover:text-red-400">
             <Trash2 className="w-5 h-5" />
           </button>
@@ -53,4 +55,4 @@ const NoteCard: React.FC<NoteCardProps> = ({ title, link  , tags, date, content 
   );
 };
 
-export default NoteCard; 
+export default NoteCard;
