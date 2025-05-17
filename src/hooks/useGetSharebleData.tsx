@@ -32,7 +32,6 @@ const useGetSharebleData = () => {
       const data = response.data;
 
       setIsPublic(data.user?.isPublic);
-      
     } catch (error) {
       const errorMessage = axios.isAxiosError(error)
         ? error.response?.data.message
@@ -49,7 +48,7 @@ const useGetSharebleData = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        "http://localhost:5000/api/v1/content/share/" + shareCode
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/content/share/` + shareCode
       );
       const data = response.data;
       if (data) {

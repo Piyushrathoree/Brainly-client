@@ -12,7 +12,7 @@ const useAddContent = () => {
   const addContent = async (details: Content) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/v1/content/add",
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/content/add`,
         {
           title: details.title,
           description: details.content,

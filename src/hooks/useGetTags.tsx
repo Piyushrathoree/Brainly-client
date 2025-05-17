@@ -16,7 +16,7 @@ const useGetTags = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/v1/tags/All`,
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/tags/All`,
         { withCredentials: false }
       );
       setTags(response.data);
