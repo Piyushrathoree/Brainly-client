@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useCallback } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 interface Content {
     _id: string;
@@ -31,8 +32,9 @@ const useGetData = () => {
         tweets: [],
         notes: []
     });
+    const navigate = useNavigate()
     const [lastFetched, setLastFetched] = useState<Date | null>(null);
-
+    const [data, setData] = useState(null)
     const getData = useCallback(async (forceRefresh = false) => {
         // If data exists and was fetched less than 5 minutes ago, return cached data
         const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
@@ -79,11 +81,44 @@ const useGetData = () => {
         }
     }, [contentData, lastFetched]);
 
+    
+
+    const getProfileData = async () => {
+        setLoading(true)
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                toast.error("you're not authorized")
+                navigate("/")
+                return
+            }
+            const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/v1/profile`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+            const data = response.data
+            setData(data)
+            return data
+        } catch (error) {
+            const errorMessage = axios.isAxiosError(error) && error.response?.data?.message
+                ? error.response.data.message
+                : "Something went wrong. Please try again later.";
+            toast.error(errorMessage);
+            return data;
+        }
+        finally {
+            setLoading(false);
+        }
+
+    }
     return {
         getData,
         loading,
         contentData,
-        refreshData: () => getData(true) // Force refresh function
+        refreshData: () => getData(true), // Force refresh function
+        getProfileData
     };
 };
 

@@ -13,7 +13,7 @@ interface FormData {
 export const useAuth = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-
+ 
   const registerUser = async (formData: FormData) => {
     setIsLoading(true);
     try {
@@ -28,7 +28,7 @@ export const useAuth = () => {
       // Handle successful signup
       const data = response.data;
       localStorage.setItem("token", data.token);
-      localStorage.setItem("shareCode" , data.user?.shareCode)
+      localStorage.setItem("shareCode", data.user?.shareCode)
       toast.success("Signup successfull ")
       navigate("/dashboard");
 
@@ -151,6 +151,5 @@ export const useAuth = () => {
     }
   };
 
-
-  return { registerUser, LoginUser, VerifyCode, loginWithGoogle, loginWithGithub, logout, isLoading };
+  return { registerUser, LoginUser, VerifyCode, loginWithGoogle, loginWithGithub, logout, isLoading  };
 };
