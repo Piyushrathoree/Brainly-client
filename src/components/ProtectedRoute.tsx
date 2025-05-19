@@ -15,7 +15,7 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
       window.location.href = "/login";
       return;
     }
-    await fetch(`http://localhost:5000/api/v1/protected`, {
+    await fetch(import.meta.env.VITE_SERVER_URL, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
