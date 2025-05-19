@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from 'axios'
 import toast from "react-hot-toast";
 
@@ -13,7 +13,14 @@ interface FormData {
 export const useAuth = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
- 
+  const [redirectUrl, setRedirectUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (redirectUrl) {
+      window.location.href = redirectUrl;
+    }
+  }, [redirectUrl]);
+
   const registerUser = async (formData: FormData) => {
     setIsLoading(true);
     try {
@@ -111,12 +118,12 @@ export const useAuth = () => {
   // OAuth login methods
   const loginWithGoogle = () => {
     setIsLoading(true);
-    window.location.href = `${import.meta.env.VITE_SERVER_URL}/oauth/google`
+    setRedirectUrl(`${import.meta.env.VITE_SERVER_URL}/oauth/google`);
   };
 
   const loginWithGithub = () => {
     setIsLoading(true);
-    window.location.href = `${import.meta.env.VITE_SERVER_URL}/oauth/github`;
+    setRedirectUrl(`${import.meta.env.VITE_SERVER_URL}/oauth/github`);
   };
 
   // Logout function

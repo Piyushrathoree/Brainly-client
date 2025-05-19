@@ -1,18 +1,19 @@
 import { ReactNode, useEffect } from "react";
 
 import { toast } from "react-hot-toast";
-
+import { useNavigate } from "react-router-dom";
 
 interface ProtectedRouteProps {
   children: ReactNode;
 }
 
 export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+  const navigate = useNavigate()
   const validateToken = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
       // token not found, redirect to login
-      window.location.href = "/login";
+      navigate("/login");
       return;
     }
     await fetch(import.meta.env.VITE_SERVER_URL, {
@@ -23,14 +24,14 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
       if (!res.ok) {
         // token is invalid, redirect to login
         localStorage.removeItem("token");
-
-        window.location.href = "/login";
+        localStorage.removeItem("shareCode")
+        navigate("/login");
         toast.error(
           "you are not authorized to access this page , please login"
         );
       }
     });
-    return ;
+    return;
   };
   useEffect(() => {
     validateToken();
