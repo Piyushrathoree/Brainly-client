@@ -64,7 +64,7 @@ const sidebarLinks = [
 const Dashboard = () => {
   const type = localStorage.getItem("type");
   const [selectedSection, setSelectedSection] = useState<SectionType>(
-    type as SectionType
+    type as SectionType || 'notes'
   );
   // Track previous section to detect transition to "tweets"
   const [prevSection, setPrevSection] = useState<SectionType | null>(null);
