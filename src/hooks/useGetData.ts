@@ -33,14 +33,9 @@ const useGetData = () => {
         notes: []
     });
     const navigate = useNavigate()
-    const [lastFetched, setLastFetched] = useState<Date | null>(null);
+
     const [data, setData] = useState(null)
-    const getData = useCallback(async (forceRefresh = false) => {
-        // If data exists and was fetched less than 5 minutes ago, return cached data
-        const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000);
-        if (!forceRefresh && lastFetched && lastFetched > fiveMinutesAgo) {
-            return contentData;
-        }
+    const getData = useCallback(async () => {
 
         setLoading(true);
         try {
@@ -53,8 +48,14 @@ const useGetData = () => {
                     }
                 }
             );
-            console.log(response.data);
-            
+            if (!response) {
+                navigate("/login")
+                localStorage.removeItem("token");
+                localStorage.removeItem("shareCode");
+                toast.error("your token has been expired ,please login again")
+            }
+
+
             const contentArray = response.data.content
 
             const newContentData = {
@@ -64,9 +65,9 @@ const useGetData = () => {
                 tweets: contentArray.filter((item: Content) => item.type === 'tweet'),
                 notes: contentArray.filter((item: Content) => item.type === 'note')
             };
-            
+
             setContentData(newContentData);
-            setLastFetched(new Date());
+
             toast.success("Content fetched successfully");
             return newContentData;
         } catch (error) {
@@ -74,14 +75,18 @@ const useGetData = () => {
             const errorMessage = axios.isAxiosError(error) && error.response?.data?.message
                 ? error.response.data.message
                 : "Something went wrong. Please try again later.";
-            toast.error(errorMessage);
+            localStorage.removeItem("token");
+            localStorage.removeItem("shareCode");
+            navigate("/login");
+            toast.error(`${errorMessage} , please login again `);
+
             return contentData;
         } finally {
             setLoading(false);
         }
-    }, [contentData, lastFetched]);
+    }, [contentData, navigate]);
 
-    
+
 
     const getProfileData = async () => {
         setLoading(true)
@@ -117,7 +122,7 @@ const useGetData = () => {
         getData,
         loading,
         contentData,
-        refreshData: () => getData(true), // Force refresh function
+        refreshData: () => getData(),
         getProfileData
     };
 };
