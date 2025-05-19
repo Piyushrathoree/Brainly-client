@@ -48,14 +48,6 @@ const useGetData = () => {
                     }
                 }
             );
-            if (!response) {
-                navigate("/login")
-                localStorage.removeItem("token");
-                localStorage.removeItem("shareCode");
-                toast.error("your token has been expired ,please login again")
-            }
-
-
             const contentArray = response.data.content
 
             const newContentData = {
