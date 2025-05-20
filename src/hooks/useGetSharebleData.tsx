@@ -21,7 +21,7 @@ const useGetSharebleData = () => {
     try {
       setLoading(true);
       const response = await axios.put(
-        "http://localhost:5000/api/v1/share/toggle",
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/share/toggle`,
         {},
         {
           headers: {
