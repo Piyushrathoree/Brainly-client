@@ -36,7 +36,6 @@ const ShareBrainDialog: React.FC<ShareBrainDialogProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     ToggleShare();
-   
   };
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

@@ -7,6 +7,7 @@ import {
 import Layout from "./layout";
 import { Toaster } from 'react-hot-toast';
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import ShareData from "./pages/ShareData";
 
 // Lazy load components for better performance
 const LandingPage = lazy(() => import("./components/LandingPage"));
@@ -101,6 +102,9 @@ const App: React.FC = () => {
                 <Profile />
               </ProtectedRoute>
             } /> */}
+            {
+              <Route path="/share/:shareCode" element={<ShareData />} />
+            }
           </Route>
           {/* Auth callback routes outside of Layout */}
           <Route path="/auth/callback" element={<OAuthCallback />} />
