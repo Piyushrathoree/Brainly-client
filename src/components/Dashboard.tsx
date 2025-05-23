@@ -4,7 +4,6 @@ import {
   IconVideo,
   IconFileText,
   IconLink,
-  IconHash,
   IconShare,
   IconPlus,
   IconRefresh,
@@ -24,14 +23,8 @@ import VideoCard from "./VideoCard";
 import DocumentCard from "./DocumentCard";
 import LinkCard from "./LinkCard";
 import { NotebookText } from "lucide-react";
-import useGetTags from "@/hooks/useGetTags";
-import useAddContent from "@/hooks/useAddContent";
 import toast from "react-hot-toast";
-
-interface Tag {
-  title: string;
-  // add other properties if needed
-}
+import useContent from "@/hooks/useContent";
 
 type SectionType =
   | "notes"
@@ -39,7 +32,6 @@ type SectionType =
   | "videos"
   | "documents"
   | "links"
-  | "tags";
 
 type ContentType = "note" | "tweet" | "video" | "link" | "document";
 
@@ -58,7 +50,6 @@ const sidebarLinks = [
   { icon: IconVideo, label: "Videos", key: "videos" },
   { icon: IconFileText, label: "Documents", key: "documents" },
   { icon: IconLink, label: "Links", key: "links" },
-  { icon: IconHash, label: "Tags", key: "tags" },
 ];
 
 const Dashboard = () => {
@@ -84,7 +75,7 @@ const Dashboard = () => {
   const [isAddContentOpen, setIsAddContentOpen] = useState(false);
   const [isShareBrainOpen, setIsShareBrainOpen] = useState(false);
 
-  const { addContent } = useAddContent();
+  const { addContent, deleteContent } = useContent();
 
   const handleAddContent = (details: ContentData) => {
     addContent({
@@ -96,12 +87,10 @@ const Dashboard = () => {
     });
   };
   const { getData, loading, contentData, refreshData } = useGetData();
-  const { getTags, tags, loading: tagsLoading } = useGetTags();
 
   useEffect(() => {
     // Initial data fetch
     getData();
-    getTags();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -113,10 +102,18 @@ const Dashboard = () => {
       return;
     }
     refreshData();
-    getTags();
   };
 
-  if (loading || tagsLoading) {
+  const handleDeleteContent = async (id: string) => {
+    try {
+      await deleteContent(id);
+      refreshData();
+    } catch {
+      // Error toast already handled in hook
+    }
+  };
+
+  if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
         <span className="text-gray-500 text-xl  ">
@@ -185,77 +182,69 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Scrollable Card Grid or Tag Chips */}
+        {/* Scrollable Card Grid */}
         <div className="group flex-1 overflow-y-auto card-scrollbar px-10 py-8 ">
-          {selectedSection === "tags" ? (
-            <div className="flex flex-wrap gap-3">
-              {tags.map((tag: Tag, idx: number) => (
-                <span
-                  key={idx}
-                  className="bg-purple-900/40 text-purple-300 dark:bg-purple-900/40 dark:text-purple-300 px-4 py-2 rounded-full text-base font-medium shadow border border-purple-800"
-                >
-                  {tag.title}
-                </span>
+          <div className=" grid grid-cols-1 md:grid-cols-2  gap-6 ">
+            {selectedSection === "notes" &&
+              contentData.notes.map((note) => (
+                <NoteCard
+                  key={note._id}
+                  id={note._id}
+                  title={note.title}
+                  content={note.content}
+                  link={note.link}
+                  date={new Date(note.createdAt)}
+                  onDelete={handleDeleteContent}
+                />
               ))}
-            </div>
-          ) : (
-            <div className=" grid grid-cols-1 md:grid-cols-2  gap-6 ">
-              {selectedSection === "notes" &&
-                contentData.notes.map((note, idx) => (
-                  <NoteCard
-                    key={idx}
-                    title={note.title}
-                    content={note.content}
-                    link={note.link}
-                    tags={note.tags}
-                    date={new Date(note.createdAt)}
-                  />
-                ))}
-              {selectedSection === "tweets" &&
-                contentData.tweets.map((tweet, idx) => (
-                  <TweetCard
-                    key={idx}
-                    title={tweet.title}
-                    link={tweet.link}
-                    tags={tweet.tags}
-                    date={new Date(tweet.createdAt)}
-                  />
-                ))}
-              {selectedSection === "documents" &&
-                contentData.document.map((doc, idx) => (
-                  <DocumentCard
-                    key={idx}
-                    title={doc.title}
-                    link={doc.link}
-                    tags={doc.tags}
-                    date={new Date(doc.createdAt)}
-                    content={doc.content}
-                  />
-                ))}
-              {selectedSection === "links" &&
-                contentData.links.map((link, idx) => (
-                  <LinkCard
-                    key={idx}
-                    title={link.title}
-                    link={link.link}
-                    tags={link.tags}
-                    date={new Date(link.createdAt)}
-                    content={link.content}
-                  />
-                ))}
-              {selectedSection === "videos" &&
-                contentData.videos.map((video, idx) => (
-                  <VideoCard
-                    key={idx}
-                    title={video.title}
-                    link={video.link}
-                    tags={video.tags}
-                    date={new Date(video.createdAt)}
-                    content={video.content}
-                  />
-                ))}
-            </div>
-          )}
+            {selectedSection === "tweets" &&
+              contentData.tweets.map((tweet) => (
+                <TweetCard
+                  key={tweet._id}
+                  id={tweet._id}
+                  title={tweet.title}
+                  link={tweet.link}
+                  date={new Date(tweet.createdAt)}
+                  onDelete={handleDeleteContent}
+                />
+              ))}
+            {selectedSection === "documents" &&
+              contentData.document.map((doc) => (
+                <DocumentCard
+                  key={doc._id}
+                  id={doc._id}
+                  title={doc.title}
+                  link={doc.link}
+                  date={new Date(doc.createdAt)}
+                  content={doc.content}
+                  onDelete={handleDeleteContent}
+                />
+              ))}
+            {selectedSection === "links" &&
+              contentData.links.map((link) => (
+                <LinkCard
+                  key={link._id}
+                  id={link._id}
+                  title={link.title}
+                  link={link.link}
+                  date={new Date(link.createdAt)}
+                  content={link.content}
+                  onDelete={handleDeleteContent}
+                />
+              ))}
+            {selectedSection === "videos" &&
+              contentData.videos.map((video) => (
+                <VideoCard
+                  key={video._id}
+                  id={video._id}
+                  title={video.title}
+                  link={video.link}
+                  date={new Date(video.createdAt)}
+                  content={video.content}
+                  onDelete={handleDeleteContent}
+                />
+              ))}
+          </div>
         </div>
       </main>
 

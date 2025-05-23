@@ -3,14 +3,23 @@ import { IconLink } from "@tabler/icons-react";
 import { Trash2 } from "lucide-react";
 
 interface LinkCardProps {
+  id: string;
   title?: string;
   link: string;
-  tags: string[];
   date: Date;
-  content?:string
+  content?: string;
+  onDelete: (id: string) => void;
 }
 
-const LinkCard: React.FC<LinkCardProps> = ({ title, link  , tags, date , content }) => {
+const LinkCard: React.FC<LinkCardProps> = ({
+  id,
+  title,
+  link,
+  date,
+  content,
+  onDelete,
+}) => {
+ 
   return (
     <div className="bg-black/80 border border-gray-800 rounded-xl p-6 shadow-lg flex flex-col gap-3 relative min-h-[180px] max-h-[320px]">
       <div className="flex items-center justify-between mb-2">
@@ -21,7 +30,10 @@ const LinkCard: React.FC<LinkCardProps> = ({ title, link  , tags, date , content
           </span>
         </div>
         <div className="flex gap-4 ">
-          <button className="text-gray-500 hover:text-red-400">
+          <button
+            className="text-gray-500 hover:text-red-400"
+            onClick={() => onDelete(id)}
+          >
             <Trash2 className="w-5 h-5" />
           </button>
         </div>
@@ -46,16 +58,6 @@ const LinkCard: React.FC<LinkCardProps> = ({ title, link  , tags, date , content
         <span className="text-xs text-gray-500 border border-slate-600 py-1 px-3 rounded-xl">
           Added on {date.toLocaleDateString()}
         </span>
-        <div className="flex  gap-3  text-sm items-center font-raleway ">
-          {tags.map((tag, idx) => (
-            <span
-              key={idx}
-              className="bg-purple-900/40 text-purple-300  text-xs font-medium border border-slate-600 py-0.5 px-3 rounded-2xl"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
       </div>
     </div>
   );

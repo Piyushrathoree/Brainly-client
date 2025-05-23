@@ -137,7 +137,7 @@ const AddContentModal: React.FC<AddContentModalProps> = ({
                   onChange={(e) => setUrl(e.target.value)}
                   placeholder={`Enter ${contentType} URL`}
                   className="bg-black/50 border-gray-700 text-white placeholder:text-gray-500"
-                  required
+                  
                 />
               </div>
             )}
@@ -152,7 +152,7 @@ const AddContentModal: React.FC<AddContentModalProps> = ({
                   onChange={(e) => setContent(e.target.value)}
                   placeholder="Enter your note content"
                   className="w-full min-h-[100px] rounded-md border border-gray-700 bg-black/50 text-white p-2 placeholder:text-gray-500 outline-none"
-                  required
+                  
                 />
               </div>
             )}
@@ -166,7 +166,7 @@ const AddContentModal: React.FC<AddContentModalProps> = ({
                   onChange={(e) => setContent(e.target.value)}
                   placeholder="Enter your document content"
                   className="w-full min-h-[100px] rounded-md border border-gray-700 bg-black/50 text-white p-2 placeholder:text-gray-500 outline-none"
-                  required
+                  
                 />
               </div>
             )}
