@@ -3,19 +3,21 @@ import { IconFileText } from "@tabler/icons-react";
 import { ArrowUpRightFromSquare, Trash2 } from "lucide-react";
 
 interface DocumentCardProps {
+  id: string;
   title: string;
   link: string;
-  tags: string[];
   date: Date;
   content?: string;
+  onDelete: (id: string) => void;
 }
 
 const DocumentCard: React.FC<DocumentCardProps> = ({
+  id,
   title,
   link,
   content,
-  tags,
   date,
+  onDelete,
 }) => {
   return (
     <div className="bg-black/80 border border-gray-800 rounded-xl p-6 shadow-lg flex flex-col gap-3 relative min-h-[250px] max-h-[350px]">
@@ -27,11 +29,13 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
           </span>
         </div>
         <div className="flex gap-3">
-          <a className="text-gray-500 hover:text-blue-400" href={link}>
-            <ArrowUpRightFromSquare className="w-5 h-5" />
-          </a>
+          {link && (
+            <a className="text-gray-500 hover:text-blue-400" href={link}>
+              <ArrowUpRightFromSquare className="w-5 h-5" />
+            </a>
+          )}
 
-          <button className="text-gray-500 hover:text-red-400">
+          <button className="text-gray-500 hover:text-red-400 " onClick={() => onDelete(id)}>
             <Trash2 className="w-5 h-5" />
           </button>
         </div>
@@ -49,16 +53,6 @@ const DocumentCard: React.FC<DocumentCardProps> = ({
         <span className="text-xs text-gray-500 border border-slate-600 py-1 px-3 rounded-xl">
           Added on {date.toLocaleDateString()}
         </span>
-        <div className="flex  gap-3  text-sm items-center font-raleway ">
-          {tags.map((tag, idx) => (
-            <span
-              key={idx}
-              className="bg-purple-900/40 text-purple-300  text-xs font-medium border border-slate-600 py-0.5 px-3 rounded-2xl"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
       </div>
     </div>
   );
