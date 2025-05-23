@@ -39,7 +39,7 @@ interface ContentData {
   type: ContentType;
   title: string;
   url?: string;
-  tags?: string[];
+  
   content?: string;
   date?: Date;
 }
@@ -82,7 +82,7 @@ const Dashboard = () => {
       title: details.title,
       content: details.content,
       link: details.url,
-      tags: details.tags,
+     
       type: details.type,
     });
   };

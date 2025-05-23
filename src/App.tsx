@@ -1,22 +1,28 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./layout";
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import ShareData from "./pages/ShareData";
-
+import ProfilePage from "./components/ProfilePage";
 // Lazy load components for better performance
 const LandingPage = lazy(() => import("./components/LandingPage"));
-const Signup = lazy(() => import("./pages/auth/Signup").then(module => ({ default: module.Signup })));
-const Login = lazy(() => import("./pages/auth/Login").then(module => ({ default: module.Login })));
-const Verify = lazy(() => import("./pages/auth/Verify").then(module => ({ default: module.Verify })));
+const Signup = lazy(() =>
+  import("./pages/auth/Signup").then((module) => ({ default: module.Signup }))
+);
+const Login = lazy(() =>
+  import("./pages/auth/Login").then((module) => ({ default: module.Login }))
+);
+const Verify = lazy(() =>
+  import("./pages/auth/Verify").then((module) => ({ default: module.Verify }))
+);
 const Dashboard = lazy(() => import("./components/Dashboard"));
-const OAuthCallback = lazy(() => import("./pages/auth/OAuthCallback").then(module => ({ default: module.OAuthCallback })));
-// const Profile = lazy(() => import("./pages/Profile"));
+const OAuthCallback = lazy(() =>
+  import("./pages/auth/OAuthCallback").then((module) => ({
+    default: module.OAuthCallback,
+  }))
+);
+
 const Questions = lazy(() => import("./pages/Questions"));
 
 // Loading fallback
@@ -45,37 +51,41 @@ const App: React.FC = () => {
 
   // Check system preference and update state
   useEffect(() => {
-    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const darkModeMediaQuery = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    );
     setIsDarkMode(darkModeMediaQuery.matches);
-    
+
     const handleChange = (e: MediaQueryListEvent) => setIsDarkMode(e.matches);
-    darkModeMediaQuery.addEventListener('change', handleChange);
-    
-    return () => darkModeMediaQuery.removeEventListener('change', handleChange);
+    darkModeMediaQuery.addEventListener("change", handleChange);
+
+    return () => darkModeMediaQuery.removeEventListener("change", handleChange);
   }, []);
 
-  return (  
+  return (
     <Router>
-      <Toaster 
-        position="bottom-right" 
+      <Toaster
+        position="bottom-right"
         toastOptions={{
           style: {
-            background: isDarkMode ? 'hsl(240, 10%, 3.9%)' : 'white',
-            color: isDarkMode ? 'hsl(0, 0%, 98%)' : 'hsl(240, 10%, 3.9%)',
-            border: isDarkMode ? '1px solid hsl(240, 3.7%, 15.9%)' : '1px solid hsl(240, 5.9%, 90%)',
+            background: isDarkMode ? "hsl(240, 10%, 3.9%)" : "white",
+            color: isDarkMode ? "hsl(0, 0%, 98%)" : "hsl(240, 10%, 3.9%)",
+            border: isDarkMode
+              ? "1px solid hsl(240, 3.7%, 15.9%)"
+              : "1px solid hsl(240, 5.9%, 90%)",
           },
           success: {
             iconTheme: {
-              primary: '#10b981',
-              secondary: isDarkMode ? 'hsl(240, 10%, 3.9%)' : 'white',
-            }
+              primary: "#10b981",
+              secondary: isDarkMode ? "hsl(240, 10%, 3.9%)" : "white",
+            },
           },
           error: {
             iconTheme: {
-              primary: '#ef4444',
-              secondary: isDarkMode ? 'hsl(240, 10%, 3.9%)' : 'white',
-            }
-          }
+              primary: "#ef4444",
+              secondary: isDarkMode ? "hsl(240, 10%, 3.9%)" : "white",
+            },
+          },
         }}
       />
       <Suspense fallback={<LoadingFallback />}>
@@ -85,26 +95,33 @@ const App: React.FC = () => {
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/verify" element={<Verify />} />
-            
+
             {/* Protected Routes */}
-            <Route path="/dashboard" element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            } />
-            <Route path="questions" element={
-              <ProtectedRoute>
-                <Questions />
-              </ProtectedRoute>
-            } />
-            {/* <Route path="profile" element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            } /> */}
-            {
-              <Route path="/share/:shareCode" element={<ShareData />} />
-            }
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="questions"
+              element={
+                <ProtectedRoute>
+                  <Questions />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="profile"
+              element={
+                <ProtectedRoute>
+                  <ProfilePage />
+                </ProtectedRoute>
+              }
+            />
+            {<Route path="/share/:shareCode" element={<ShareData />} />}
           </Route>
           {/* Auth callback routes outside of Layout */}
           <Route path="/auth/callback" element={<OAuthCallback />} />

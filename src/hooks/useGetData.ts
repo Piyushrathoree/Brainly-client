@@ -23,6 +23,17 @@ interface ContentData {
     notes: Content[];
 }
 
+interface UserProfile {
+    user: {
+        _id: string;
+        name: string;
+        isPublic:boolean;
+        isVerified:boolean;
+        createdAt:Date;
+        email:string
+    };
+}
+
 const useGetData = () => {
     const [loading, setLoading] = useState(false);
     const [contentData, setContentData] = useState<ContentData>({
@@ -34,7 +45,7 @@ const useGetData = () => {
     });
     const navigate = useNavigate()
 
-    const [data, setData] = useState(null)
+    const [data, setData] = useState<UserProfile | null>(null)
     const getData = useCallback(async () => {
 
         setLoading(true);
@@ -115,8 +126,9 @@ const useGetData = () => {
         loading,
         contentData,
         refreshData: () => getData(),
-        getProfileData
-    };
+        getProfileData,
+        data
+    } as const;
 };
 
 export default useGetData;
