@@ -2,19 +2,21 @@ import React from "react";
 import { NotebookText, Trash2 } from "lucide-react";
 
 interface NoteCardProps {
+  id: string;
   title: string;
   link: string;
   content?: string;
-  tags: string[];
   date: Date;
+  onDelete: (id: string) => void;
 }
 
 const NoteCard: React.FC<NoteCardProps> = ({
+  id,
   title,
   link,
-  tags,
   date,
   content,
+  onDelete,
 }) => {
   return (
     <div className="bg-black/80 border border-gray-800 rounded-xl p-6 shadow-lg h-80  flex flex-col gap-3 relative">
@@ -26,7 +28,7 @@ const NoteCard: React.FC<NoteCardProps> = ({
           {title}
         </h2>
         <div className="flex gap-4">
-          <button className="text-gray-500 hover:text-red-400">
+          <button className="text-gray-500 hover:text-red-400" onClick={() => onDelete(id)}>
             <Trash2 className="w-5 h-5" />
           </button>
         </div>
@@ -37,16 +39,6 @@ const NoteCard: React.FC<NoteCardProps> = ({
       </a>
       <div className="text-gray-300 text-base mb-2">{content}</div>
       <div className="absolute bottom-6 left-6">
-        <div className="flex flex-wrap gap-2 mb-2">
-          {tags.map((tag, idx) => (
-            <span
-              key={idx}
-              className="bg-purple-900/40 text-purple-300 px-2 py-1 rounded text-xs font-medium"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
         <span className="text-xs text-gray-500">
           Added on {date.toLocaleDateString()}
         </span>

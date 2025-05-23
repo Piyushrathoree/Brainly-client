@@ -2,11 +2,12 @@ import React from "react";
 import { Trash2 } from "lucide-react";
 
 interface VideoCardProps {
+  id: string;
   title: string;
   link: string;
-  tags: string[];
   date: Date;
   content?: string;
+  onDelete: (id: string) => void;
 }
 
 const getYouTubeId = (url: string) => {
@@ -17,11 +18,12 @@ const getYouTubeId = (url: string) => {
 };
 
 const VideoCard: React.FC<VideoCardProps> = ({
+  id,
   title,
   link,
-  tags,
   date,
   content,
+  onDelete,
 }) => {
   const videoId = getYouTubeId(link);
   return (
@@ -29,7 +31,7 @@ const VideoCard: React.FC<VideoCardProps> = ({
       <div className="flex items-center justify-between mb-2">
         <span className="text-lg font-bold text-white truncate">{title}</span>
         <div className="flex gap-2">
-          <button className="text-gray-500 hover:text-red-400">
+          <button className="text-gray-500 hover:text-red-400" onClick={() => onDelete(id)}>
             <Trash2 className="w-5 h-5" />
           </button>
         </div>
@@ -63,16 +65,6 @@ const VideoCard: React.FC<VideoCardProps> = ({
           <div className="mb-2">{content}</div>
         </div>
       )}
-      <div className="flex flex-wrap gap-2 ">
-        {tags.map((tag, idx) => (
-          <span
-            key={idx}
-            className="bg-purple-900/40 text-purple-300 px-2 py-1 rounded text-xs font-medium"
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
       <span className="text-xs text-gray-500">
         Added on {date.toLocaleDateString()}
       </span>
