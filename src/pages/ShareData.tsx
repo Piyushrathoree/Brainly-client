@@ -22,8 +22,7 @@ const ShareData = () => {
     <div>
         <h1 className="text-red-300 text-2xl font-bold">ShareData</h1>
         {/* {data.map((item) => (
-            
-           
+          
         ))} */}
     </div>  
   )
