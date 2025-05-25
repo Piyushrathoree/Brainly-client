@@ -1,9 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { IconBrain, IconFileText, IconVideo, IconBrandTwitter, IconLink, IconSearch } from '@tabler/icons-react';
-import DeferredLoad from './DeferredLoad';
+
+import { useNavigate } from 'react-router-dom';
 
 const LandingPage: React.FC = () => {
+  const navigate = useNavigate()
   return (
     <div className="min-h-screen bg-black/94 text-white">
       {/* Hero Section */}
@@ -28,7 +30,9 @@ const LandingPage: React.FC = () => {
             documents, videos, tweets, and more in one place.
           </p>
           <div className="flex justify-center gap-4">
-            <button className="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg transition-all duration-300 transform hover:scale-105">
+            <button className="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg transition-all duration-300 transform hover:scale-105" onClick={()=>{
+              navigate("/signup")
+            }}>
               Start Building Your Knowledge Base
             </button>
             <button className="px-8 py-3 border border-gray-700 rounded-lg hover:bg-black/50 transition-all duration-300 transform hover:scale-105">
@@ -137,14 +141,16 @@ const LandingPage: React.FC = () => {
                 Join thousands of knowledge workers who are already using
                 Brainly to organize their digital life.
               </p>
-              <button className="px-8 py-3 bg-white text-purple-600 rounded-lg hover:bg-purple-50 transition-all duration-200 transform hover:scale-105">
+              <button className="px-8 py-3 bg-white text-purple-600 rounded-lg hover:bg-purple-50 transition-all duration-200 transform hover:scale-105" onClick={()=>{
+                navigate("/signup")
+              }}>
                 Get Started for Free
               </button>
             </div>
           </motion.div>
         </div>
       </section>
-      <DeferredLoad>
+      
         <footer className="bg-black/95 border-t border-gray-800">
           <div className="container mx-auto px-4 py-6">
             <div className="flex flex-col md:flex-row justify-between items-center">
@@ -186,7 +192,7 @@ const LandingPage: React.FC = () => {
             </div>
           </div>
         </footer>
-      </DeferredLoad>
+      
     </div>
   );
 };
